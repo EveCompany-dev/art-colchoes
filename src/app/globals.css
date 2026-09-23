@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-michroma), var(--font-manrope), sans-serif;
+  --font-grotesk: var(--font-grotesk), var(--font-manrope), sans-serif;
+
+  --color-navy: #0b1630;
+  --color-navy-2: #13244b;
+  --color-cream: #f5f2ec;
+  --color-sand: #e9e1d4;
+  --color-copper: #c4703a;
+  --color-sky: #2f6bff;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Michroma é uma fonte larga: tracking levemente negativo em títulos grandes */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+
+/* linhas do SplitText com máscara */
+.split-mask {
+  overflow: clip;
+  padding-bottom: 0.08em;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+::selection {
+  background: #c4703a;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
