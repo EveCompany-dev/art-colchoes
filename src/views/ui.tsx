@@ -10,7 +10,8 @@ import Icon, { WhatsAppGlyph } from "@/components/Icon";
 import { whatsappLink } from "@/lib/site";
 
 export const BLUE = "#2f6bff";
-export const BASE = "/v1";
+// Base das rotas (era "/v1" enquanto as direções criativas estavam em revisão).
+export const BASE = "";
 
 export const routes = {
   home: `${BASE}/`,
@@ -22,7 +23,7 @@ export const routes = {
   contato: `${BASE}/#contato`,
 };
 
-export const v1Nav: NavItem[] = [
+export const mainNav: NavItem[] = [
   { href: routes.showroom, label: "Showroom" },
   { href: routes.produtos, label: "Produtos" },
   { href: routes.tecnologia, label: "Tecnologia" },
@@ -34,10 +35,10 @@ export const v1Nav: NavItem[] = [
 export function Shell({ children }: { children: ReactNode }) {
   return (
     <div className="bg-night text-white">
-      <Header heroTone="light" barTone="dark" accent={BLUE} items={v1Nav} homeHref={routes.home} />
+      <Header heroTone="light" barTone="dark" accent={BLUE} items={mainNav} homeHref={routes.home} />
       <Smooth>
         <main>{children}</main>
-        <Footer theme="dark" links={[{ href: routes.home, label: "Início" }, ...v1Nav]} />
+        <Footer theme="dark" links={[{ href: routes.home, label: "Início" }, ...mainNav]} />
       </Smooth>
       <WhatsAppFloat />
     </div>

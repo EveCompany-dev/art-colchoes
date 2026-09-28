@@ -19,7 +19,7 @@ export function ProductCard({ p, theme = "light", accent }: { p: Product; theme?
       <div className="relative aspect-[4/3] overflow-hidden" style={{ background: dark ? "linear-gradient(160deg,#1a2749,#0b1328)" : `linear-gradient(160deg, #f7f5f1, ${p.tone.top})` }}>
         {p.photo ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={p.photo} alt={`Colchão ${p.brand} ${p.name} no showroom da Art Colchões`} loading="lazy" className="size-full object-cover transition duration-700 group-hover:scale-105" />
+          <img src={p.photo} alt={`Colchão ${p.brand} ${p.name}`} loading="lazy" className="size-full object-cover transition duration-700 group-hover:scale-105" />
         ) : (
           <IsoMattress layers={productLayers(p.tone.top, p.tone.side)} className="absolute inset-0 m-auto h-[82%] w-[82%] transition duration-700 group-hover:-translate-y-2" title={`Ilustração do colchão ${p.name}`} />
         )}

@@ -5,18 +5,18 @@ Export estático: roda na Vercel ou em qualquer hospedagem de arquivos (Hostinge
 
 ## Rotas
 
+Direção V1 "Showroom Editorial" (aprovada em 23/09/2026) no tema noturno, multipágina:
+
 | Rota | O que é |
 | --- | --- |
-| `/` | Página interna de revisão com as direções criativas |
-| `/v1/` | Showroom Editorial, agora no tema noturno da v2 e multipágina (home + `/v1/produtos/`, `/v1/tecnologia/`, `/v1/duvidas/`) |
-| `/v2/` | Noite Profunda: escuro, imersivo, azul |
-| `/v3/` | Tipografia Bold: areia + preto + azul elétrico |
-| `/campanha/` | Landing de campanha (10.10) com contagem regressiva |
+| `/` | Home: hero, marcas, diferenciais, ambientes, atalhos, sobre e contato |
+| `/produtos/` | Catálogo de colchões com filtro, categorias e guia de firmeza |
+| `/tecnologia/` | Explicador de camadas e tecnologias Pikolin |
+| `/duvidas/` | FAQ (com dados estruturados FAQPage) |
+| `/campanha/` | Landing de campanha (10.10) com contagem regressiva e ofertas |
 
-Depois que o cliente aprovar uma versão, mover o conteúdo dela para `src/app/page.tsx`,
-apagar as outras e remover o bloqueio de `/v1..v3` em `src/app/robots.ts`.
-Na v1, as rotas ficam em `src/versions/v1/ui.tsx` (`BASE`): trocar para `""` ao promover para a raiz,
-mover `src/app/v1/*` para `src/app/*` e incluir as páginas novas no `sitemap.ts`.
+O código das páginas fica em `src/views/` (`ui.tsx` tem as rotas, o menu e o `Shell`).
+As direções V2 e V3 foram removidas e continuam no histórico do git (commit `573c768`).
 
 ## Desenvolvimento
 
@@ -28,9 +28,12 @@ npm run dev
 ## Onde editar o conteúdo
 
 - `src/lib/site.ts`: contatos, endereço, horários, diferenciais, marcas, cidades e FAQ (tudo do briefing)
-- `src/lib/products.ts`: catálogo (**placeholder** com a linha Pikolin) e camadas do explicador de tecnologia
-- `src/lib/campaign.ts`: dados da campanha (data, título, produtos em destaque)
+- `src/lib/products.ts`: catálogo dos 11 colchões expostos (Pikolin e Mannes) e camadas do explicador de tecnologia
+- `src/lib/campaign.ts`: dados da campanha (datas, horário especial, ofertas de/por, produtos em destaque).
+  Com `preview: true` a página mostra o aviso de "ofertas de exemplo"
 - `public/img/`: fotos otimizadas. Para regerar a partir dos originais: `node scripts/prepare-images.mjs`
+- `public/img/produto-*`: fotos de produto recortadas das lâminas de catálogo (`../assets-cliente/catalogo`),
+  com o fundo removido: `node scripts/prepare-catalog.mjs`
 
 ## Deploy
 
@@ -46,6 +49,9 @@ cada rota vira `rota/index.html` e funciona no Apache sem configuração extra.
 
 ## Preview na rede local
 
+Com `npm run dev` o site já abre no celular pelo IP da máquina (`http://<ip>:3000`, liberado em
+`allowedDevOrigins` no `next.config.ts`). Para testar a versão final (mais fiel em desempenho):
+
 ```bash
 npm run build
 npx serve out -l tcp://0.0.0.0:4000
@@ -54,11 +60,11 @@ Abrir `http://<ip-da-máquina>:4000` no celular (mesma rede Wi-Fi).
 
 ## Pendências com o cliente
 
-- Fotos de produto dos modelos sem foto (Bold, Balance, Equilibrium, Activeness, Inspire, Bless, Mind, Nova York): hoje aparece uma ilustração
-- Ficha do Black Signature Medium e do Nova York (altura, firmeza e suporte não são públicos)
-- Medidas disponíveis e garantia de cada modelo
-- Confirmar se Herval e D'Angelis entram só como marcas de cama & banho/bases (os colchões expostos informados são Pikolin e Mannes)
-- Instagram integrado: precisa de token da Graph API ou de um widget (Behold/Elfsight)
-- Domínio definitivo (`site.url` em `src/lib/site.ts`)
-- Ofertas reais da campanha 10.10
-- Logo da Art Colchões em vetor (o PDF "Logo pdf atualizada" enviado é o da D'Angelis)
+- Fotos de produto de Cure, Dense, Balance, Equilibrium, Activeness e Inspire no mesmo padrão das lâminas
+  (Cure e Dense usam foto do showroom; os outros 4 ainda aparecem como ilustração)
+- Firmeza do Nova York; medidas disponíveis e garantia de cada modelo
+- Confirmar se Herval e D'Angelis entram só como marcas de cama & banho/bases
+- Instagram integrado: conectar a conta @artcolchoesbrusque num serviço de feed (ex.: Behold) ou na Graph API
+- Domínio: `artcolchoes.com.br` já está registrado por terceiros; definir alternativa (`site.url` em `src/lib/site.ts`)
+- Ofertas reais da campanha 10.10 (hoje são as do Mês do Cliente como exemplo; trocar e pôr `preview: false`)
+- Logo da Art Colchões em vetor (SVG/PDF/AI). O logo atual é um PNG tirado de um JPG; o PDF "Logo pdf atualizada" é o da D'Angelis
