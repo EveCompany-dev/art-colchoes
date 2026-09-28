@@ -34,11 +34,13 @@ export function TechHighlights() {
   useTitleReveal(root);
   useScrollAnim(() => {
     gsap.utils.toArray<HTMLElement>(".th-card").forEach((card) => {
-      gsap
+      const tl = gsap
         .timeline({ scrollTrigger: { trigger: card, start: "top 80%" } })
-        .from(card, { y: 60, opacity: 0, duration: 0.9, ease: "power3.out" })
-        .from(card.querySelectorAll(".draw"), { drawSVG: "0%", duration: 1.8, stagger: 0.12, ease: "power2.inOut" }, 0.2)
-        .from(card.querySelectorAll(".th-in"), { y: 20, opacity: 0, stagger: 0.08, duration: 0.6 }, 0.6);
+        .from(card, { y: 60, opacity: 0, duration: 0.9, ease: "power3.out" });
+      // o card do cobre não tem ilustração em traço
+      const draws = card.querySelectorAll(".draw");
+      if (draws.length) tl.from(draws, { drawSVG: "0%", duration: 1.8, stagger: 0.12, ease: "power2.inOut" }, 0.2);
+      tl.from(card.querySelectorAll(".th-in"), { y: 20, opacity: 0, stagger: 0.08, duration: 0.6 }, 0.6);
     });
   }, root);
 
